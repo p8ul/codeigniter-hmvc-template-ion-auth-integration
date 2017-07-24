@@ -1,3 +1,4 @@
+<?php foreach ($user as $u) { ?>
 <!-- Main content -->
 <div class="content-wrapper">
  <div class='panel'>
@@ -5,7 +6,7 @@
   <div class="row">
   <div class='col-md-12 ' id="infoMessage"><?php echo $message;?></div>
   <!-- for -->
-  <?php $attributes = array('class' => 'create_user', 'id' => 'create_user'); ?>
+  <?php $attributes = array('class' => 'edit_user', 'id' => 'edit_user'); ?>
   <?php echo form_open("auth/create_user",$attributes);?>
   <div class='col-md-6'>
       <!-- fistname -->
@@ -15,13 +16,7 @@
        <?php echo form_input($first_name,FALSE,'class="form-control"');?>
      </div>
     </div>
-    <!-- middle name -->
-    <div class="col-md-6">
-     <div class="form-group">
-      <label>Username:</label>
-      <?=form_input($identity,FALSE,'class="form-control"');?>
-     </div>
-    </div>
+    
     <!-- lastname -->
     <div class="col-md-6">
      <div class="form-group">
@@ -34,20 +29,16 @@
     <div class="col-md-6">
      <div class="form-group">
       <label>Gender:</label>
-      <select name="gender" placeholder='Gender' class="form-control">
+      <select name="gender" class="form-control">
         <option>--</option>
         <option value="male">Male</option>
         <option value="female">Female</option>
-      </select>
-     
+      </select>     
      </div>
     </div>
     <!-- middle name -->
     <div class="col-md-6">
-     <div class="form-group">
-      <label>Email:</label>
-      <?php echo form_input($email,FALSE,'class="form-control"');?>
-     </div>
+     
     </div>
     <!-- PHone -->
     <div class="col-md-6">
@@ -76,13 +67,37 @@
     <div class="col-md-6">
      <div class="form-group">
       <label>Company:</label>
-       <?php echo form_input($company, FALSE,'class="form-control');?>
+       <?php echo form_input($company, FALSE,'class="form-control"');?>
      </div>
     </div>
     <!-- death -->
     <div class="col-md-6">
      <div class="form-group">
-      
+     <?php if ($this->ion_auth->is_admin()): ?>
+
+          <label><?php echo lang('edit_user_groups_heading');?></label>
+          <?php foreach ($groups as $group):?>
+              <label class="checkbox">
+              <?php
+                  $gID=$group['id'];
+                  $checked = null;
+                  $item = null;
+                  foreach($currentGroups as $grp) {
+                      if ($gID == $grp->id) {
+                          $checked= ' checked="checked"';
+                      break;
+                      }
+                  }
+              ?>
+              <input type="checkbox" name="groups[]" value="<?php echo $group['id'];?>"<?php echo $checked;?>>
+              <?php echo htmlspecialchars($group['name'],ENT_QUOTES,'UTF-8');?>
+              </label>
+          <?php endforeach?>
+
+      <?php endif ?>
+
+      <?php echo form_hidden('id', $u['id']);?>
+      <?php echo form_hidden($csrf); ?> 
      </div>
     </div>
    <div class="col-md-6 text-right">
@@ -92,12 +107,13 @@
   
    </div>
   </div>
+   <div class="col-md-12 text-right">
+   <button class="btn btn-primary" type='submit'>Add Member</button>
+   </div>
+</form>
 
   </div>
-  <div class="col-md-12 text-right">
-   <button class="btn btn-primary" type='submit'>Add Member</button>
-  </div>
-</form>
+ 
   </div>
 
   </div>
@@ -112,12 +128,8 @@
     
    });
 
-   $('#create_user').validate({
-    rules:{
-        identity: {
-          required:true,
-          minlength:2
-        },        
+   $('#edit_user').validate({
+    rules:{                
         first_name:{
           required:true,         
           minlength: 1
@@ -125,25 +137,11 @@
         last_name:{
           required:true,          
           minlength: 1
-        },
-        email:{
-          required:true,          
-          minlength: 4
-        },
-        password:{
-          required:true,
-          minlength: 8
-        },
-        password_confirm:{
-          required:true,
-          minlength:8,
-          equalTo: "#password"
-        },
-        
+        },       
 
     },
     messages:{
-      name:{
+      first_name:{
         required: "please provide a name",
         minlength: "name must be atleast 3 characters long"
       },      
@@ -151,7 +149,7 @@
     submitHandler: function() { 
       
       if(1 != ''){
-          var f = document.getElementById('create_user');
+          var f = document.getElementById('edit_user');
           var formData = new FormData(f);
           
           for (var pair of formData.entries()) {
@@ -159,7 +157,7 @@
           }
           if (formData) {
                 $.ajax({
-                    url: "<?=base_url('auth/create_user');?>",
+                    url: "<?=base_url('auth/edit_user/'.$u['id']);?>",
                     type: "POST",
                     data: formData,
                     processData: false,
@@ -167,7 +165,7 @@
                     success:function(data){
                        console.log(data);
                        $("#username").val('');           
-                       $("email").val('');               
+                                     
 
                        $.jGrowl('User added successfully,', {
                           header: 'Well done!',
@@ -196,3 +194,4 @@
     }
   });
  </script>
+ <?php } ?>

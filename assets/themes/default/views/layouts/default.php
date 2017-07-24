@@ -13,6 +13,7 @@
         <?=theme_css("components.css");?>
         <?=theme_css("colors.css");?>
         <!-- /global stylesheets -->
+        <?=theme_css('custom.css');?>
 
         <!-- Core JS files -->
         <?=theme_js("plugins/loaders/pace.min.js");?>
@@ -25,6 +26,9 @@
         <!-- /core JS files -->
 
         <!-- Theme JS files -->
+        <?=theme_js("plugins/buttons/hover_dropdown.min.js");?>
+        <?=theme_js("plugins/ui/jquery-validation/jquery.validate.js");?>
+       <?=theme_js("plugins/notifications/jgrowl.min.js");?>
        <?=theme_js("core/app.js");?>
        <?=theme_js("pages/layout_sidebar_sticky_custom.js");?>
         <!-- /theme JS files -->
@@ -34,9 +38,12 @@
         <!-- Theme JS files -->
         <?=theme_js("plugins/forms/styling/uniform.min.js");?>
   </head>
-  <body >        
+  <body class="navbar-top-md-md" > 
+   <!-- Fixed navbars wrapper -->
+   <div class="navbar-fixed-top">       
     <?php echo $template['partials']['top']; ?>
-    <!-- echo $template['partials']['navbar']; ?> -->
+    <?php echo $template['partials']['navbar']; ?>
+   </div>
     <!-- echo $template['partials']['breadcrumb']; ?> -->
     <!-- Page container -->
     <div class="page-container">

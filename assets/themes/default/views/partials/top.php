@@ -1,3 +1,4 @@
+
 <!-- Main navbar -->
 	<div class="navbar navbar-inverse bg-indigo">
 		<div class="navbar-header">
@@ -31,8 +32,8 @@
 				</li>
 
 				<li class="dropdown dropdown-user">
-					<a class="dropdown-toggle" data-toggle="dropdown">
-						<img src="<?=img_url();?>/image.png" alt="">
+					<a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+						<img src="<?=img_url();?>/demo/users/1.png" alt="">
 						<span><?php
 						$this->user=$this->ion_auth->user();
 

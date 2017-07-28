@@ -42,7 +42,7 @@
    <!-- Fixed navbars wrapper -->
    <div class="navbar-fixed-top">       
     <?php echo $template['partials']['top']; ?>
-    <?php echo $template['partials']['navbar']; ?>
+     <!-- echo $template['partials']['navbar']; ?> -->
    </div>
     <!-- echo $template['partials']['breadcrumb']; ?> -->
     <!-- Page container -->

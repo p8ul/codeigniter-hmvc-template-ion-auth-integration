@@ -18,13 +18,23 @@
                         <!-- Main -->
                         <li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main pages"></i></li>
                         <li><a href="<?=base_url();?>"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
-                        <li class="active">
+                        <li <?php echo preg_match('/^(members)$/i', $this->uri->uri_string()) ? 'class="active open" ' : ''; ?>>
                             <a href="#"><i class="icon-stack"></i> <span>Members</span></a>
                             <ul>
-                                <li><a  href="<?=base_url('auth/create_user');?>">Add Member</a></li>
-                                <li ><a href="<?=base_url('home');?>">Member list</a></li>
-                                
+                                <li
+                                <?php echo preg_match('/^(members)/i', $this->uri->uri_string()) ? 'class="active open" ' : ''; ?>
+                                ><a  href="<?=base_url('members/create');?>">Add Member</a></li>
+                                <li ><a href="<?=base_url('members');?>">Member list</a></li>               
                                
+                            </ul>
+                        </li>
+                        <li 
+                        <?php echo preg_match('/^(auth)/i', $this->uri->uri_string()) ? 'class="active open" ' : ''; ?>
+                        >
+                            <a href="#"><i class="icon-stack"></i> <span>User</span></a>
+                            <ul>
+                                <li><a  href="<?=base_url('auth/create_user');?>">Add User</a></li>
+                                <li ><a href="<?=base_url('auth');?>">User list</a></li>               
                                
                             </ul>
                         </li>

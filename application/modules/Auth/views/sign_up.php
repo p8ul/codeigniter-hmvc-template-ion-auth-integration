@@ -205,9 +205,11 @@
                       window.location = "<?=base_url('auth/');?>";
                     },
                     error:function(xhr,status,err){
-                      console.log(xhr);
-                      console.log(status);
-                      $.jGrowl(xhr.responseText['message'], {
+                      //console.log(xhr);
+                      //console.log(status);
+                      var message = xhr.responseText;                      
+                      
+                      $.jGrowl(xhr.responseText, {
                           header: 'Oh snap!',
                           theme: 'bg-danger'
                       });

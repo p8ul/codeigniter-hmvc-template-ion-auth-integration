@@ -46,10 +46,8 @@
 								<button type="submit" class="btn bg-pink-400 btn-block">Login <i class="icon-circle-right2 position-right"></i></button>
 							</div>
 
-							<div class="content-divider text-muted form-group"><span>Don't have an account?</span></div>
-						<a href="<?=base_url('auth/sign_up');?>" class="btn btn-default btn-block content-group">Sign up</a>
+							
 						</div>
-
 					</form>
 					<!-- /advanced login -->
 

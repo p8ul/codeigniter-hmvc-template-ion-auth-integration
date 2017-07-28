@@ -1490,6 +1490,7 @@ class Ion_auth_model extends CI_Model
 	 * @return object
 	 * @author Ben Edmunds
 	 **/
+
 	public function user($id = NULL)
 	{
 		$this->trigger_events('user');
@@ -1504,6 +1505,11 @@ class Ion_auth_model extends CI_Model
 		$this->users();
 
 		return $this;
+	}
+	public function get_users($id){
+		$this->db->where('id', $id);
+		$query = $this->db->get($this->tables['users']);
+		return $query->result_array();
 	}
 
 	/**

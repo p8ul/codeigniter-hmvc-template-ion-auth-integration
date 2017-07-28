@@ -7,7 +7,7 @@
 		<div class="panel panel-body">
 			<div class="media">
 				<div class="media-left">
-					<a href="<?=base_url('auth/edit_user/');?><?=$user->id;?>" data-popup="lightbox">
+					<a href="<?=base_url('home/view_user/');?><?=$user->id;?>" data-popup="lightbox">
 						<img src="<?=img_url();?>/demo/images/1.png" style="width: 70px; height: 70px;" class="img-circle" alt="">
 					</a>
 				</div>

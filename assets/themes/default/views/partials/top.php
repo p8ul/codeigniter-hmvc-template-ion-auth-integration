@@ -1,5 +1,6 @@
+
 <!-- Main navbar -->
-	<div class="navbar navbar-inverse bg-indigo">
+	<div class="navbar navbar-inverse  bg-green-600">
 		<div class="navbar-header">
 			<a class="navbar-brand" href="<?=base_url();?>"><img src="<?=img_url();?>/logo_light.png" alt=""></a>
 
@@ -14,6 +15,13 @@
 				<li>
 					<a class="sidebar-control sidebar-main-toggle hidden-xs">
 						<i class="icon-paragraph-justify3"></i>
+					</a>
+				</li>
+				<li>
+				   <a>
+					<span style="font-size: 34px;margin-left: 202px" class="text-bold text-center">
+						Presbyterian Church 
+					</span>
 					</a>
 				</li>
 
@@ -31,8 +39,8 @@
 				</li>
 
 				<li class="dropdown dropdown-user">
-					<a class="dropdown-toggle" data-toggle="dropdown">
-						<img src="<?=img_url();?>/image.png" alt="">
+					<a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+						<img src="<?=img_url();?>/demo/users/1.png" alt="">
 						<span><?php
 						$this->user=$this->ion_auth->user();
 

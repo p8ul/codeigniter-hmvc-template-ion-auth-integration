@@ -458,10 +458,11 @@ class Auth extends MY_Controller {
                 'last_name'  => $this->input->post('last_name'),
                 'company'    => $this->input->post('company'),
                 'phone'      => $this->input->post('phone'),
-                
+                'district'   => $this->input->post('district'),
                 'gender'      => $this->input->post('gender'),
-                
-               
+                'death_date'  => $this->input->post('death_date'),
+                'transfer_date'      => $this->input->post('transfer_date'),
+                'membership'      => $this->input->post('membership'),
             );
         }
         if ($this->form_validation->run() == true && $this->ion_auth->register($identity, $password, $email, $additional_data))
@@ -531,129 +532,6 @@ class Auth extends MY_Controller {
 		               ->build('add_member', $this->data);
         }
     }
-
-    // sign up 
-    // 
-	public function sign_up()
-    {
-        $this->data['title'] = $this->lang->line('create_user_heading');
-
-        $tables = $this->config->item('tables','ion_auth');
-        $identity_column = $this->config->item('identity','ion_auth');
-        $this->data['identity_column'] = $identity_column;
-
-        // validate form input
-        $this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'required');
-        $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'), 'required');
-        if($identity_column!=='email')
-        {
-            $this->form_validation->set_rules('identity',$this->lang->line('create_user_validation_identity_label'),'required|is_unique['.$tables['users'].'.'.$identity_column.']');
-            $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'required|valid_email');
-        }
-        else
-        {
-            $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'required|valid_email|is_unique[' . $tables['users'] . '.email]');
-        }
-        $this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'trim');
-        $this->form_validation->set_rules('company', $this->lang->line('create_user_validation_company_label'), 'trim');
-        $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
-        $this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
-
-        if ($this->form_validation->run() == true)
-        {   
-            $email    = strtolower($this->input->post('email'));
-            $identity = ($identity_column==='email') ? $email : $this->input->post('identity');
-            $password = $this->input->post('password');
-
-            $additional_data = array(
-                'first_name' => $this->input->post('first_name'),
-                'last_name'  => $this->input->post('last_name'),
-                'company'    => $this->input->post('company'),
-                'phone'      => $this->input->post('phone'),
-                
-                'gender'      => $this->input->post('gender'),
-                
-               
-            );
-        }
-        if ($this->form_validation->run() == true && $this->ion_auth->register($identity, $password, $email, $additional_data))
-        {
-            // check to see if we are creating the user
-            // redirect them back to the admin page
-            $this->session->set_flashdata('message', $this->ion_auth->messages());
-            //redirect("auth", 'refresh');
-        }
-        else
-        {
-            // display the create user form
-            // set the flash data error message if there is one
-            $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-
-            $this->data['first_name'] = array(
-                'name'  => 'first_name',
-                'id'    => 'first_name',
-                'type'  => 'text',
-                'value' => $this->form_validation->set_value('first_name'),
-            );
-            $this->data['last_name'] = array(
-                'name'  => 'last_name',
-                'id'    => 'last_name',
-                'type'  => 'text',
-                'value' => $this->form_validation->set_value('last_name'),
-            );
-            $this->data['identity'] = array(
-                'name'  => 'identity',
-                'id'    => 'identity',
-                'type'  => 'text',
-                'value' => $this->form_validation->set_value('identity'),
-            );
-            $this->data['email'] = array(
-                'name'  => 'email',
-                'id'    => 'email',
-                'type'  => 'text',
-                'value' => $this->form_validation->set_value('email'),
-            );
-            $this->data['company'] = array(
-                'name'  => 'company',
-                'id'    => 'company',
-                'type'  => 'text',
-                'value' => $this->form_validation->set_value('company'),
-            );
-            $this->data['phone'] = array(
-                'name'  => 'phone',
-                'id'    => 'phone',
-                'type'  => 'text',
-                'value' => $this->form_validation->set_value('phone'),
-            );
-            $this->data['password'] = array(
-                'name'  => 'password',
-                'id'    => 'password',
-                'type'  => 'password',
-                'value' => $this->form_validation->set_value('password'),
-            );
-            $this->data['password_confirm'] = array(
-                'name'  => 'password_confirm',
-                'id'    => 'password_confirm',
-                'type'  => 'password',
-                'value' => $this->form_validation->set_value('password_confirm'),
-            );
-
-           // $this->_render_page('auth/create_user', $this->data);
-           $message = $this->data['message'];
-           if($message){
-           	header('HTTP/1.1 500 Internal Server Error');
-           header('Content-Type: application/json; charset=UTF-8');
-           die(json_encode(array('message'=> $message,'code'=>1337)));
-           }
-
-           $this->template->title('Add Member')
-           			   ->set_layout('login')	   
-		               ->build('sign_up', $this->data);
-           
-           
-        }
-    }
-    // ./sign_up
 
 	// edit a user
 	public function edit_user($id)
@@ -759,15 +637,12 @@ class Auth extends MY_Controller {
 
 		// display the edit user form
 		$this->data['csrf'] = $this->_get_csrf_nonce();
-        //print_r($this->data['csrf']);
-        //return false;
+
 		// set the flash data error message if there is one
 		$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
 		// pass the user to the view
-		//$this->data['user'] = $user;
-		$this->data['user'] = $this->ion_auth->get_users($id);
-    
+		$this->data['user'] = $user;
 		$this->data['groups'] = $groups;
 		$this->data['currentGroups'] = $currentGroups;
 
@@ -806,10 +681,9 @@ class Auth extends MY_Controller {
 			'type' => 'password'
 		);
 
-		//$this->_render_page('auth/edit_user', $this->data);
-	    // print_r($this->data);
-		$this->template->title('Add Member')	   
-		               ->build('edit_user', $this->data);
+		$this->_render_page('auth/edit_user', $this->data);
+		$this->template->title('Home Page');	   
+		               //->build('user_v', $this->data);
 	}
 
 	// create a new group
@@ -944,7 +818,7 @@ class Auth extends MY_Controller {
 		}
 		else
 		{
-			return TRUE;
+			return FALSE;
 		}
 	}
 

@@ -12,6 +12,7 @@
     <?=theme_css("core.css");?>
     <?=theme_css("components.css");?>
     <?=theme_css("colors.css");?>
+    <?=theme_css("custom.css");?>
     <!-- /global stylesheets -->
 
     <!-- Core JS files -->
@@ -23,7 +24,10 @@
 
     <!-- Theme JS files -->
     <?=theme_js("plugins/forms/styling/uniform.min.js");?>
-
+    <?=theme_js("plugins/ui/jquery-validation/jquery.validate.js");?>
+    <?=theme_js("plugins/ui/drilldown.js");?>
+    <?=theme_js("plugins/notifications/jgrowl.min.js");?>
+    <?=theme_js("plugins/ui/nicescroll.min.js");?>
     <?=theme_js("core/app.js");?>
     <?=theme_js("pages/login.js");?>
 
@@ -43,6 +47,7 @@
         </div><!-- End .container -->
 
     </div><!-- End #content -->
-         
+     
+
     </body>
 </html>
